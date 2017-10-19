@@ -1,4 +1,4 @@
-import { Component, NgZone } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
@@ -9,7 +9,7 @@ import { FormGroup, FormControl, FormsModule, ReactiveFormsModule } from '@angul
 export class AppComponent {
   timer: any;
   count = 0;
-  constructor(ngZone: NgZone) {
+  constructor() {
   }
   title = 'app';
   data = [{
@@ -44,6 +44,7 @@ export class AppComponent {
 
   public addItem(obj: any = this.data[this.data.length - 1]): void {
     this.data.push(obj);
+    this.data = this.data.slice(0);
   }
 
   public onSubmit(val: any): void {

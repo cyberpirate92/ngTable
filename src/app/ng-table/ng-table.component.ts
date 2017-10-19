@@ -21,6 +21,10 @@ export class NgTableComponent implements OnInit, OnChanges {
     private rows: string[][];
 
     constructor() {
+        this.clear();
+    }
+
+    public clear() {
         this.columns = [];
         this.rows = [];
     }
@@ -36,6 +40,7 @@ export class NgTableComponent implements OnInit, OnChanges {
     }
 
     extractRowsAndColumns(objArray: any[]): void {
+        this.clear();
         const colSet = new Set<string>();
         for (let i = 0; i < objArray.length; i++) {
             const keys = Object.keys(objArray[i]);
