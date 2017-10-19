@@ -10,7 +10,7 @@ describe('NgTableComponent', () => {
         TestBed.configureTestingModule({
             declarations: [NgTableComponent]
         })
-            .compileComponents();
+        .compileComponents();
     }));
 
     beforeEach(() => {
