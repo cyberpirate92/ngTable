@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { NgTableComponent } from './ng-table/ng-table.component';
+import { AlertModule } from 'ngx-bootstrap';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { NgTableComponent } from './ng-table/ng-table.component';
   imports: [
     BrowserModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AlertModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

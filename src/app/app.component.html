@@ -1,23 +1,37 @@
-<form #newPersonForm="ngForm" (ngSubmit)="onSubmit(newPersonForm.value)">
-  <div>
-    First Name: <input type="text" name="fName" ngModel>
-  </div>
-  <div>
-      Last Name: <input type="text" name="lName" ngModel>
-  </div>
-  <div>
-      Email: <input type="email" name="email" ngModel>
-  </div>
-  <div>
-      gender <br />
-      Male <input type="radio" value="male" name="gender" ngModel>
-      Female <input type="radio" value="female" name="gender" ngModel>
-  </div>
-  <div>
-      <button type="submit">Add</button>
-  </div>
-</form>
-<hr>
-<app-ng-table [data]="data"></app-ng-table>
-<button type='submit' (click)='addItem()'>Add Last</button>
-<pre> {{this | json}} </pre>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-4">
+            <form #newPersonForm="ngForm" (ngSubmit)="onSubmit(newPersonForm.value)">
+                <div class="form-group">
+                    First Name:
+                    <input type="text" name="fName" class="form-control" ngModel>
+                </div>
+                <div class="form-group">
+                    Last Name:
+                    <input type="text" name="lName" class="form-control" ngModel>
+                </div>
+                <div class="form-group">
+                    Email:
+                    <input type="email" name="email" class="form-control" ngModel>
+                </div>
+                <div class="form-check">
+                    Gender
+                    <label class="form-check-label">
+                        <input type="radio" value="male" name="gender" class="form-check-input" ngModel> Male
+                    </label>
+                    <label class="form-check-label">
+                        <input type="radio" value="female" name="gender" class="form-check-input" ngModel> Female
+                    </label>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Add</button>
+                    <button type='submit' class="btn btn-secondary" (click)='addItem()'>Add Last</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-sm">
+            <app-ng-table [data]="data"></app-ng-table>
+        </div>
+    </div>
+    <pre> {{this | json}} </pre>
+</div>
