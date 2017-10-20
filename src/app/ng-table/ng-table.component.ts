@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 
 import { RowSelectionEvent } from './row-selection-event';
+import { ColumnProps } from './column-props';
 
 @Component({
     selector: 'app-ng-table',
@@ -24,8 +25,7 @@ export class NgTableComponent implements OnInit, OnChanges {
     @Output() onRowSelected: EventEmitter<RowSelectionEvent>;
     @Output() onRowDeselected: EventEmitter<RowSelectionEvent>;
 
-    private columnHeaders: string[];
-    private properties: string[];
+    private colProps: ColumnProps[];
     private rows: any[][];
     private rowSelectionFlags: boolean[];
     private selectAllFlag: any;
@@ -85,7 +85,7 @@ export class NgTableComponent implements OnInit, OnChanges {
     }
 
     public clear() {
-        this.columnHeaders = [];
+        this.colProps = [];
         this.rows = [];
         this.rowSelectionFlags = [];
     }
@@ -110,23 +110,23 @@ export class NgTableComponent implements OnInit, OnChanges {
             }
         }
 
-        this.properties = Array.from(propSet);
-
-        if (!this.enableTitleCasedHeaders) {
-            this.columnHeaders = this.properties;
-        } else {
-            const cols = this.properties.slice(0);
-            for (let i = 0; i < cols.length; i++) {
-                this.columnHeaders.push(NgTableComponent.getTitleCasedString(cols[i]));
-            }
+        const cols = Array.from(propSet);
+        for (let i = 0; i < cols.length; i++) {
+            const colProp: ColumnProps = {
+                columnTitle: this.enableTitleCasedHeaders ? cols[i]
+                    : NgTableComponent.getTitleCasedString(cols[i]),
+                propertyName: cols[i],
+                visible: true
+            };
+            this.colProps.push(colProp);
         }
 
         for (let i = 0; i < objArray.length; i++) {
             const obj = objArray[i];
             const row = [];
-            for (let j = 0; j < this.properties.length; j++) {
-                if (obj.hasOwnProperty(this.properties[j])) {
-                    row.push(obj[this.properties[j]]);
+            for (let j = 0; j < this.colProps.length; j++) {
+                if (obj.hasOwnProperty(this.colProps[j].propertyName)) {
+                    row.push(obj[this.colProps[j].propertyName]);
                 } else {
                     row.push(null);
                 }
@@ -138,9 +138,9 @@ export class NgTableComponent implements OnInit, OnChanges {
 
     private generateObject(row: any[]): any {
         const obj = {};
-        if (row.length === this.properties.length) {
+        if (row.length === this.colProps.length) {
             for ( let i = 0; i < row.length; i++) {
-                obj[this.properties[i]] = row[i];
+                obj[this.colProps[i].propertyName] = row[i];
             }
         } else {
             throw new Error('Cannot generate object: Column and Row length mismatch');

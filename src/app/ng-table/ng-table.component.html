@@ -5,8 +5,8 @@
                 <th>
                     <app-tri-state-checkbox [state]="selectAllFlag" (onStateChange)="onSelectAllChange($event)"></app-tri-state-checkbox>
                 </th>
-                <th *ngFor="let colHeader of columnHeaders">
-                    {{colHeader}}
+                <th *ngFor="let col of colProps">
+                    {{col.columnTitle}}
                 </th>
             </tr>
         </thead>
