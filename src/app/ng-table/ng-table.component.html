@@ -1,12 +1,16 @@
 <div class="row">
-    <table class="table">
-        <tr>
-            <th *ngFor="let colHeader of columnHeaders">
-                {{colHeader}}
-            </th>
-        </tr>
-        <tr *ngFor="let row of rows">
-            <td *ngFor="let cell of row">{{cell}}</td>
-        </tr>
+    <table class="table table-bordered table-hover">
+        <thead class="thead-inverse">
+            <tr>
+                <th *ngFor="let colHeader of columnHeaders">
+                    {{colHeader}}
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let row of rows">
+                <td *ngFor="let cell of row">{{cell}}</td>
+            </tr>
+        </tbody>
     </table>
 </div>
