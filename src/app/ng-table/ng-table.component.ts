@@ -20,7 +20,7 @@ export class NgTableComponent implements OnInit, OnChanges {
 
     private columnHeaders: string[];
     private properties: string[];
-    private rows: string[][];
+    private rows: any[][];
 
     public static isLowerCase(x: string): boolean {
         return x >= 'a' && x <= 'z';
