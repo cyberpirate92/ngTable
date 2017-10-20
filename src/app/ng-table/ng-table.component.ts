@@ -193,5 +193,6 @@ export class NgTableComponent implements OnInit, OnChanges {
         } else {
             this.onRowDeselected.emit(obj);
         }
+        this.selectAllFlag = isChecked;
     }
 }
