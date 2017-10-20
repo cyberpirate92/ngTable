@@ -1,3 +1,5 @@
+import { FormsModule } from '@angular/forms';
+import { TristateComponent } from './tristate.component';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NgTableComponent } from './ng-table.component';
@@ -8,7 +10,8 @@ describe('NgTableComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [NgTableComponent]
+            declarations: [NgTableComponent, TristateComponent],
+            imports: [FormsModule]
         })
         .compileComponents();
     }));

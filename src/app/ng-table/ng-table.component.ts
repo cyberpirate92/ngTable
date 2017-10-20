@@ -5,7 +5,10 @@ import {
     OnInit,
     SimpleChanges,
     OnChanges,
+    EventEmitter
 } from '@angular/core';
+
+import { RowSelectionEvent } from './row-selection-event';
 
 @Component({
     selector: 'app-ng-table',
@@ -18,9 +21,14 @@ export class NgTableComponent implements OnInit, OnChanges {
     @Input() data: any[];
     @Input() enableTitleCasedHeaders: boolean;
 
+    @Output() onRowSelected: EventEmitter<RowSelectionEvent>;
+    @Output() onRowDeselected: EventEmitter<RowSelectionEvent>;
+
     private columnHeaders: string[];
     private properties: string[];
     private rows: any[][];
+    private rowSelectionFlags: boolean[];
+    private selectAllFlag: any;
 
     public static isLowerCase(x: string): boolean {
         return x >= 'a' && x <= 'z';
@@ -36,7 +44,6 @@ export class NgTableComponent implements OnInit, OnChanges {
 
     public static getTitleCasedString(s: string): string {
         s = s.trim();
-        console.log('Before=> "' + s + '"');
         let t = '';
         if (s.length !== 0) {
             if (NgTableComponent.isLowerCase(s[0])) {
@@ -66,18 +73,21 @@ export class NgTableComponent implements OnInit, OnChanges {
                 }
             }
         }
-        console.log('After=> "' + t + '"');
         return t;
     }
 
     constructor() {
+        this.selectAllFlag = false;
         this.enableTitleCasedHeaders = false;
+        this.onRowSelected = new EventEmitter<any>();
+        this.onRowDeselected = new EventEmitter<any>();
         this.clear();
     }
 
     public clear() {
         this.columnHeaders = [];
         this.rows = [];
+        this.rowSelectionFlags = [];
     }
 
     ngOnInit() {
@@ -122,6 +132,66 @@ export class NgTableComponent implements OnInit, OnChanges {
                 }
             }
             this.rows.push(row);
+            this.rowSelectionFlags.push(false);
+        }
+    }
+
+    private generateObject(row: any[]): any {
+        const obj = {};
+        if (row.length === this.properties.length) {
+            for ( let i = 0; i < row.length; i++) {
+                obj[this.properties[i]] = row[i];
+            }
+        } else {
+            throw new Error('Cannot generate object: Column and Row length mismatch');
+        }
+        return obj;
+    }
+
+    private getAllSelectedRows(): any[] {
+        const selectedRows = [];
+        for (let i = 0; i < this.rowSelectionFlags.length; i++) {
+            if (this.rowSelectionFlags[i]) {
+                selectedRows.push(this.generateObject(this.rows[i]));
+            }
+        }
+        return selectedRows;
+    }
+
+    private onRowSelection(row: any[], selectionIndex: number): void {
+        if ( selectionIndex < this.rowSelectionFlags.length) {
+            this.rowSelectionFlags[selectionIndex] = !this.rowSelectionFlags[selectionIndex];
+        }
+        const obj: RowSelectionEvent = {
+            lastSelection: this.generateObject(row),
+            completeSelection: this.getAllSelectedRows(),
+        };
+        if (this.rowSelectionFlags[selectionIndex]) {
+            this.onRowSelected.emit(obj);
+        } else {
+            this.onRowDeselected.emit(obj);
+        }
+        if (obj.completeSelection.length === 0) {
+            this.selectAllFlag = false;
+        } else if (obj.completeSelection.length === this.rows.length) {
+            this.selectAllFlag = true;
+        } else {
+            this.selectAllFlag = null;
+        }
+    }
+
+    private onSelectAllChange(isChecked: boolean): void {
+        for (let i = 0; i < this.rowSelectionFlags.length; i++) {
+            this.rowSelectionFlags[i] = isChecked;
+        }
+        const obj: RowSelectionEvent = {
+            lastSelection: null,    // lastSelection will be null for selectAll events
+            completeSelection: this.getAllSelectedRows()
+        };
+        if (isChecked) {
+            this.onRowSelected.emit(obj);
+        } else {
+            this.onRowDeselected.emit(obj);
         }
     }
 }

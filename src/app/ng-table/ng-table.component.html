@@ -2,14 +2,22 @@
     <table class="table table-bordered table-hover">
         <thead class="thead-inverse">
             <tr>
+                <th>
+                    <app-tri-state-checkbox [state]="selectAllFlag" (onStateChange)="onSelectAllChange($event)"></app-tri-state-checkbox>
+                </th>
                 <th *ngFor="let colHeader of columnHeaders">
                     {{colHeader}}
                 </th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let row of rows">
-                <td *ngFor="let cell of row">{{cell}}</td>
+            <tr *ngFor="let row of rows; let i = index;" [ngClass]="{'table-info': rowSelectionFlags[i]}">
+                <td>
+                    <input type='checkbox' (click)="onRowSelection(row, i)" [(ngModel)]="this.rowSelectionFlags[i]">
+                </td>
+                <td *ngFor="let cell of row">
+                    {{cell}}
+                </td>
             </tr>
         </tbody>
     </table>

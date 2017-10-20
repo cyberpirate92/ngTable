@@ -9,6 +9,7 @@ import { FormGroup, FormControl, FormsModule, ReactiveFormsModule } from '@angul
 export class AppComponent {
   timer: any;
   count = 0;
+  tempCheck = false;
   constructor() {
   }
   title = 'app';
@@ -57,5 +58,9 @@ export class AppComponent {
       ip_address: null
     };
     this.addItem(item);
+  }
+
+  public onRowSelected(x: any) {
+    console.log(x);
   }
 }

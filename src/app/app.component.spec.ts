@@ -1,3 +1,4 @@
+import { TristateComponent } from './ng-table/tristate.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgTableComponent } from './ng-table/ng-table.component';
 import { TestBed, async } from '@angular/core/testing';
@@ -13,7 +14,8 @@ describe('AppComponent', () => {
       ],
       declarations: [
         AppComponent,
-        NgTableComponent
+        NgTableComponent,
+        TristateComponent
       ],
     }).compileComponents();
   }));
