@@ -36,7 +36,12 @@
             </form>
         </div>
         <div class="col-sm px-5">
-            <app-ng-table [data]="data" [enableTitleCasedHeaders]="true" (onRowSelected)="onRowSelected($event)" (onRowDeselected)="onRowSelected($event)">
+            <app-ng-table 
+                [data]="data" 
+                [enableTitleCasedHeaders]="true" 
+                [enableColumnSelection]="true" 
+                (onRowSelected)="onRowSelected($event)" 
+                (onRowDeselected)="onRowSelected($event)">
             </app-ng-table>
         </div>
     </div>

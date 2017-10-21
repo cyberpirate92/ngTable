@@ -21,6 +21,7 @@ export class NgTableComponent implements OnInit, OnChanges {
 
     @Input() data: any[];
     @Input() enableTitleCasedHeaders: boolean;
+    @Input() enableColumnSelection: boolean;
 
     @Output() onRowSelected: EventEmitter<RowSelectionEvent>;
     @Output() onRowDeselected: EventEmitter<RowSelectionEvent>;
@@ -81,6 +82,7 @@ export class NgTableComponent implements OnInit, OnChanges {
     constructor() {
         this.selectAllFlag = false;
         this.enableTitleCasedHeaders = false;
+        this.enableColumnSelection = false;
         this.onRowSelected = new EventEmitter<any>();
         this.onRowDeselected = new EventEmitter<any>();
         this.colSelectorDropDownFlag = false;
