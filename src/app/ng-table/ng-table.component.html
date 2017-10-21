@@ -1,24 +1,43 @@
 <div class="row">
-    <table class="table table-bordered table-hover">
-        <thead class="thead-inverse">
-            <tr>
-                <th>
-                    <app-tri-state-checkbox [state]="selectAllFlag" (onStateChange)="onSelectAllChange($event)"></app-tri-state-checkbox>
-                </th>
-                <th *ngFor="let col of colProps">
-                    {{col.columnTitle}}
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let row of rows; let i = index;" [ngClass]="{'table-info': rowSelectionFlags[i]}">
-                <td>
-                    <input type='checkbox' (click)="onRowSelection(row, i)" [(ngModel)]="this.rowSelectionFlags[i]">
-                </td>
-                <td *ngFor="let cell of row">
-                    {{cell}}
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+    <div class="col-xs-12 col-sm-12">
+        <div class="row px-1">
+            <div class="col-sm-4 align-items-start text-center">
+                <span *ngIf="selectedRowCount > 0"> {{ selectedRowCount }} rows selected </span>
+            </div>
+            <div class="col align-items-center text-center">
+                &nbsp;
+            </div>
+            <div class="col-sm-3 align-items-end text-left">
+                <button class="glyphicon glyphicon-triangle-bottom" (click)="toggleColumnSelectionDropdown()">Columns &#9662;</button>
+                <ul class="text-left column-selection-dropdown px-3 py-1" *ngIf="colSelectorDropDownFlag">
+                    <li *ngFor="let colProp of colProps" href="#">
+                        <input type='checkbox' [(ngModel)]="colProp.visible"> {{colProp.columnTitle}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12">
+            <table class="table table-bordered table-hover">
+                <thead class="thead-inverse">
+                    <tr>
+                        <th>
+                            <app-tri-state-checkbox [state]="selectAllFlag" (onStateChange)="onSelectAllChange($event)"></app-tri-state-checkbox>
+                        </th>
+                        <th *ngFor="let col of colProps">
+                            {{col.columnTitle}}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let row of rows; let i = index;" [ngClass]="{'table-info': rowSelectionFlags[i]}">
+                        <td>
+                            <input type='checkbox' (click)="onRowSelection(row, i)" [(ngModel)]="this.rowSelectionFlags[i]">
+                        </td>
+                        <td *ngFor="let cell of row">
+                            {{cell}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>

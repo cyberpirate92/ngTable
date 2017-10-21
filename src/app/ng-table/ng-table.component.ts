@@ -29,6 +29,8 @@ export class NgTableComponent implements OnInit, OnChanges {
     private rows: any[][];
     private rowSelectionFlags: boolean[];
     private selectAllFlag: any;
+    private colSelectorDropDownFlag: boolean;
+    private selectedRowCount: number;
 
     public static isLowerCase(x: string): boolean {
         return x >= 'a' && x <= 'z';
@@ -81,6 +83,8 @@ export class NgTableComponent implements OnInit, OnChanges {
         this.enableTitleCasedHeaders = false;
         this.onRowSelected = new EventEmitter<any>();
         this.onRowDeselected = new EventEmitter<any>();
+        this.colSelectorDropDownFlag = false;
+        this.selectedRowCount = 0;
         this.clear();
     }
 
@@ -113,8 +117,9 @@ export class NgTableComponent implements OnInit, OnChanges {
         const cols = Array.from(propSet);
         for (let i = 0; i < cols.length; i++) {
             const colProp: ColumnProps = {
-                columnTitle: this.enableTitleCasedHeaders ? cols[i]
-                    : NgTableComponent.getTitleCasedString(cols[i]),
+                columnTitle: this.enableTitleCasedHeaders
+                    ? NgTableComponent.getTitleCasedString(cols[i])
+                    : cols[i],
                 propertyName: cols[i],
                 visible: true
             };
@@ -155,6 +160,7 @@ export class NgTableComponent implements OnInit, OnChanges {
                 selectedRows.push(this.generateObject(this.rows[i]));
             }
         }
+        this.selectedRowCount = selectedRows.length;
         return selectedRows;
     }
 
@@ -194,5 +200,9 @@ export class NgTableComponent implements OnInit, OnChanges {
             this.onRowDeselected.emit(obj);
         }
         this.selectAllFlag = isChecked;
+    }
+
+    private toggleColumnSelectionDropdown(): void {
+        this.colSelectorDropDownFlag = !this.colSelectorDropDownFlag;
     }
 }
