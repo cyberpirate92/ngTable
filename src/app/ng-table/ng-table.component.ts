@@ -12,7 +12,7 @@ import { RowSelectionEvent } from './row-selection-event';
 import { ColumnProps } from './column-props';
 
 @Component({
-    selector: 'app-ng-table',
+    selector: 'ng-table',
     templateUrl: './ng-table.component.html',
     styleUrls: ['./ng-table.component.css']
 })

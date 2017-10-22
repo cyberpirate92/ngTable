@@ -3,21 +3,19 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
-import { NgTableComponent } from './ng-table/ng-table.component';
 import { AlertModule } from 'ngx-bootstrap';
-import { TristateComponent } from './ng-table/tristate.component';
+import { NgTableModule } from './ng-table/ng-table.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NgTableComponent,
-    TristateComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    AlertModule.forRoot()
+    AlertModule.forRoot(),
+    NgTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]
